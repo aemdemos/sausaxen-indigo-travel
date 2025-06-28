@@ -1,54 +1,56 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the main content section holding the cards
-  const contentSection = element.querySelector('.c-how-it-works__content');
-  if (!contentSection) return;
+  // Block header: must match example exactly
+  const cells = [['Cards (cardsNoImages5)']];
 
-  // Function to collect paragraphs and nested sections' paragraphs in order
-  function collectCardParagraphs(parent) {
-    const children = Array.from(parent.children);
-    let result = [];
-    for (const child of children) {
-      if (child.tagName === 'P') {
-        result.push(child);
-      } else if (child.tagName === 'SECTION') {
-        // Only direct <p> children of SECTION; order is preserved
-        result.push(...collectCardParagraphs(child));
+  // Find the container holding the cards (features/benefits)
+  // It's the .col-lg-8.c-how-it-works__content
+  const cardsContainer = element.querySelector('.col-lg-8.c-how-it-works__content');
+  if (!cardsContainer) return;
+
+  // The cards are structured as a series of <p><strong>Title</strong></p> followed by <p>Description</p>
+  // and some are inside a <section> with two <p>s
+  let current = cardsContainer.firstElementChild;
+  while (current) {
+    // 1. If this is a <p> with <strong>, treat as card title.
+    if (current.tagName === 'P' && current.querySelector('strong')) {
+      // Title is this <p>, description is next sibling <p> (if present and not a card title)
+      const titleElem = current;
+      let descElem = null;
+      let next = titleElem.nextElementSibling;
+      if (next && next.tagName === 'P' && !next.querySelector('strong')) {
+        descElem = next;
       }
+      // Collect all relevant elements into a fragment array (reuse references, don't clone, keep all semantic structure)
+      const cellContent = [titleElem];
+      if (descElem) {
+        cellContent.push(document.createElement('br'));
+        cellContent.push(descElem);
+      }
+      cells.push([cellContent]);
+      // Move to next after description if we had one, else just after title
+      current = descElem ? descElem.nextElementSibling : titleElem.nextElementSibling;
+      continue;
     }
-    return result;
+    // 2. If this is a <section>, treat its <p>s as a card as well
+    if (current.tagName === 'SECTION') {
+      const ps = current.querySelectorAll('p');
+      if (ps.length > 0) {
+        const cellContent = [ps[0]]; // title
+        if (ps.length > 1) {
+          cellContent.push(document.createElement('br'));
+          cellContent.push(ps[1]); // description
+        }
+        cells.push([cellContent]);
+      }
+      current = current.nextElementSibling;
+      continue;
+    }
+    // else skip non-card elements (e.g. button wrappers)
+    current = current.nextElementSibling;
   }
 
-  // Get all paragraphs in source order, including those in nested sections
-  const allParagraphs = collectCardParagraphs(contentSection);
-
-  // Group pairs: a <p> with <strong>, then a <p> without (description)
-  const cardRows = [];
-  let i = 0;
-  while (i < allParagraphs.length) {
-    const titleP = allParagraphs[i];
-    if (titleP.querySelector('strong')) {
-      const cardCells = [titleP];
-      const descP = allParagraphs[i + 1];
-      if (descP && !descP.querySelector('strong')) {
-        cardCells.push(descP);
-        i += 2;
-      } else {
-        i += 1;
-      }
-      cardRows.push([cardCells]);
-    } else {
-      // If there's a paragraph not matching the pattern, skip it
-      i += 1;
-    }
-  }
-
-  // Block header as specified by the example
-  const cells = [
-    ['Cards (cardsNoImages5)'],
-    ...cardRows
-  ];
-
+  // Replace the original element with the table block
   const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

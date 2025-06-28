@@ -1,29 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the row that contains the columns
+  // Find the row containing the columns
   const row = element.querySelector('.row.u-flex-wrapper');
   if (!row) return;
-  // Get all direct column elements
-  const columns = Array.from(row.children).filter(col => col.classList.contains('col-md-6'));
 
-  // Gather the content of each column
-  const cells = columns.map(col => {
+  // Get all immediate child columns
+  const cols = Array.from(row.children).filter(col => col.classList.contains('col-md-6'));
+
+  // For each column, build the content cell by referencing existing DOM nodes
+  const colCells = cols.map(col => {
+    // Card inner
     const cardInner = col.querySelector('.c-card__inner');
-    if (cardInner) {
-      return cardInner;
+    if (!cardInner) return document.createTextNode('');
+    // Content block (contains h3)
+    const contentBlock = cardInner.querySelector('.c-card__content');
+    // Button wrapper (contains 1 or more links)
+    const buttonWrapper = cardInner.querySelector('.c-button-wrapper-stack');
+
+    const cellContent = [];
+    if (contentBlock) {
+      // Reference the h3 as a paragraph for flat structure
+      const h3 = contentBlock.querySelector('h3');
+      if (h3) {
+        const p = document.createElement('p');
+        p.textContent = h3.textContent;
+        cellContent.push(p);
+      }
     }
-    return '';
+    if (buttonWrapper) {
+      // All links in the button wrapper
+      const links = Array.from(buttonWrapper.querySelectorAll('a'));
+      links.forEach(link => cellContent.push(link));
+    }
+    // If cellContent is empty, insert empty string, else the array
+    return cellContent.length ? cellContent : document.createTextNode('');
   });
 
-  // Only continue if we have at least one column
-  if (cells.length === 0) return;
-
-  // Structure the table: header row should be a single cell, content row has one cell per column
-  const tableArr = [
+  // Compose table
+  const rows = [
     ['Columns (columns12)'],
-    cells
+    colCells
   ];
-
-  const table = WebImporter.DOMUtils.createTable(tableArr, document);
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(rows, document);
+  element.replaceWith(block);
 }

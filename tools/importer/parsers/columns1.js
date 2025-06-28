@@ -1,59 +1,65 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper: Extract background image URL from style
-  function extractBgImageUrl(style) {
+  // Helper to get the hero image URL from inline styles
+  function getHeroImageUrl(wrapperDiv) {
+    if (!wrapperDiv) return null;
+    const style = wrapperDiv.getAttribute('style');
     if (!style) return null;
-    // Prefer --image-large
-    const regex = /--image-(large|medium|small): url\('([^']+)'/g;
-    let match, url = null;
-    while ((match = regex.exec(style)) !== null) {
-      url = match[2];
-      if (match[1] === 'large') break;
+    let match = style.match(/--image-large:\s*url\('([^']+)'\)/);
+    if (!match) {
+      match = style.match(/--image-medium:\s*url\('([^']+)'\)/);
     }
-    return url;
+    if (!match) {
+      match = style.match(/--image-small:\s*url\('([^']+)'\)/);
+    }
+    return match ? match[1] : null;
   }
 
-  // Find grid container
-  const container = element.querySelector('.container-grid');
-  if (!container) return;
-
-  // Identify columns
-  const contentWrapper = container.querySelector('.c-hero-header-key-callout__content-wrapper');
-  const imageWrapper = container.querySelector('.c-hero-header-key-callout__image-wrapper');
+  // Find the grid container (main columns structure)
+  const grid = element.querySelector('.container-grid');
+  if (!grid) return;
+  // Left: Content wrapper, Right: Image wrapper
+  const contentWrapper = grid.querySelector('.c-hero-header-key-callout__content-wrapper');
+  const imageWrapper = grid.querySelector('.c-hero-header-key-callout__image-wrapper');
 
   // Left column content
-  let leftCellContent = [];
+  let leftContent = null;
   if (contentWrapper) {
-    const contentContainer = contentWrapper.querySelector('.c-content-container');
-    if (contentContainer) leftCellContent.push(contentContainer);
-  }
-  if (leftCellContent.length === 0) leftCellContent = [''];
-
-  // Right column content (image from background)
-  let rightCellContent = [];
-  if (imageWrapper) {
-    const style = imageWrapper.getAttribute('style') || '';
-    const imgUrl = extractBgImageUrl(style);
-    if (imgUrl) {
-      const img = document.createElement('img');
-      img.src = imgUrl;
-      img.alt = '';
-      rightCellContent.push(img);
+    const containerBody = contentWrapper.querySelector('.c-content-container__body');
+    if (containerBody) {
+      leftContent = containerBody;
+    } else {
+      leftContent = contentWrapper;
     }
+  } else {
+    leftContent = '';
   }
-  if (rightCellContent.length === 0) rightCellContent = [''];
 
-  // Build table: header row is a single cell, second row has two cells
-  const headerRow = ['Columns (columns1)']; // Single-cell header row
-  const contentRow = [
-    leftCellContent.length === 1 ? leftCellContent[0] : leftCellContent,
-    rightCellContent.length === 1 ? rightCellContent[0] : rightCellContent
-  ];
+  // Right column content: the image, only if the URL exists
+  let rightContent = '';
+  const imageUrl = getHeroImageUrl(imageWrapper);
+  if (imageUrl) {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.setAttribute('loading', 'lazy');
+    rightContent = img;
+  }
 
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    contentRow
-  ], document);
+  // The header row must have one cell, but for proper alignment, create two columns for data row
+  const rows = [];
+  // Header row: a single cell, no empty cells for remaining columns
+  rows.push(['Columns (columns1)']);
+  // Data row: two columns
+  rows.push([leftContent, rightContent]);
+
+  // Create the table
+  const table = WebImporter.DOMUtils.createTable(rows, document);
+
+  // Fix the table so the header <th> spans both columns
+  const th = table.querySelector('th');
+  if (th && table.rows[1] && table.rows[1].cells.length > 1) {
+    th.colSpan = table.rows[1].cells.length;
+  }
 
   element.replaceWith(table);
 }

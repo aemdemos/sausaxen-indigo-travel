@@ -1,52 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Table header as per the example
-  const cells = [['Cards (cards10)']];
+  // Initialize rows with the exact header
+  const rows = [['Cards (cards10)']];
 
-  // Find all card containers (direct children)
+  // Select all direct card containers
   const cardContainers = element.querySelectorAll(':scope > div');
 
-  cardContainers.forEach((card) => {
-    // Icon (first cell)
-    let iconCell = '';
-    const iconWrapper = card.querySelector('.icon-wrapper');
+  cardContainers.forEach((container) => {
+    // --- ICON CELL: Try to find a meaningful icon or image ---
+    let iconCell = null;
+    const iconWrapper = container.querySelector('.icon-wrapper');
     if (iconWrapper) {
-      const icon = iconWrapper.querySelector('i');
-      if (icon) {
-        iconCell = icon;
-      } else {
-        iconCell = iconWrapper;
-      }
+      // Reference the icon wrapper directly (may include <i> or other icons)
+      iconCell = iconWrapper;
+    } else {
+      // fallback is an empty cell
+      iconCell = document.createElement('span');
     }
 
-    // Text content (second cell)
+    // --- TEXT CELL ---
     const textContent = [];
-    // Heading/title
-    const heading = card.querySelector('h1, h2, h3, h4, .c-card--product__heading');
+    // Title
+    const heading = container.querySelector('.c-card--product__heading');
     if (heading) textContent.push(heading);
     // Description
-    const description = card.querySelector('.c-card--product__description, p');
-    if (description) textContent.push(description);
-    // CTA link/button
-    const ctaWrapper = card.querySelector('.c-button-wrapper-stack');
-    let cta = null;
-    if (ctaWrapper) {
-      cta = ctaWrapper.querySelector('a');
-      if (cta) textContent.push(cta);
-    }
-    // fallback if direct link
-    if (!cta) {
-      const link = card.querySelector('a');
-      if (link && (!ctaWrapper || !ctaWrapper.contains(link))) textContent.push(link);
+    const desc = container.querySelector('.c-card--product__description');
+    if (desc) textContent.push(desc);
+    // CTA (button/link)
+    const ctaWrap = container.querySelector('.c-button-wrapper-stack');
+    if (ctaWrap) textContent.push(ctaWrap);
+    // Edge case: If all are missing, use an empty cell
+    if (textContent.length === 0) {
+      textContent.push(document.createElement('span'));
     }
 
-    cells.push([
+    rows.push([
       iconCell,
       textContent
     ]);
   });
 
-  // Create and replace
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  // Create the block table and replace original element
+  const table = WebImporter.DOMUtils.createTable(rows, document);
   element.replaceWith(table);
 }

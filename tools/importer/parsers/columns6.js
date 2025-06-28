@@ -1,37 +1,44 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Defensive: find the columns from the inner container structure
-  let col1 = null;
-  let col2 = null;
-  // Look for nested containers/rows/columns
-  const rows = element.querySelectorAll('.container .row');
-  for (const row of rows) {
-    const cols = row.querySelectorAll('.col-md-8, .col-md-4');
-    if (cols.length === 2) {
-      col1 = cols[0];
-      col2 = cols[1];
+  // Find the deepest row that contains the two columns (text and logo)
+  let contentRow = null;
+  let columns = null;
+  // Search for div.container > div.row that has two direct >div children
+  const containerRows = element.querySelectorAll('div.container > div.row');
+  for (const row of containerRows) {
+    const directCols = row.querySelectorAll(':scope > div');
+    if (directCols.length === 2) {
+      columns = directCols;
+      contentRow = row;
       break;
     }
   }
-  // Fallback: if not found, pick the first two columns matching col-md-8/col-md-4
-  if (!col1 || !col2) {
-    const cols = element.querySelectorAll('.col-md-8, .col-md-4');
-    if (cols.length >= 2) {
-      col1 = cols[0];
-      col2 = cols[1];
+  // Fallback: try to find any row with two columns
+  if (!columns) {
+    const rows = element.querySelectorAll('div.row');
+    for (const row of rows) {
+      const directCols = row.querySelectorAll(':scope > div');
+      if (directCols.length === 2) {
+        columns = directCols;
+        contentRow = row;
+        break;
+      }
     }
   }
-  // Fallback: use the whole element in one column if no columns
-  if (!col1) {
-    col1 = element;
+  // Defensive: if not exactly 2 columns found, exit function
+  if (!columns || columns.length !== 2) {
+    return;
   }
-  if (!col2) {
-    col2 = document.createElement('div');
-  }
-  // Table header as specified
+
+  // Use the entire column elements as cells, preserving all nested structure
   const headerRow = ['Columns (columns6)'];
-  const contentRow = [col1, col2];
-  const cells = [headerRow, contentRow];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+  const contentRowArr = [columns[0], columns[1]];
+
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    contentRowArr
+  ], document);
+
+  // Replace the original element with the block table
   element.replaceWith(table);
 }
