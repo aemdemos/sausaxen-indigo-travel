@@ -1,0 +1,17 @@
+{
+  "originUrl": "https://www.nrma.com.au",
+  "urls": [
+    {
+      "url": "https://www.nrma.com.au/home-loans",
+      "source": "MANUAL",
+      "targetPath": "/home-loans",
+      "id": "c6fa4982f4af50718d8de8eb73ed3f66c40ee9ff"
+    }
+  ],
+  "crawlOptions": {
+    "strategy": "manual",
+    "strategiesAttempted": [
+      "MANUAL"
+    ]
+  }
+}
