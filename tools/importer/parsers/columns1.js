@@ -1,65 +1,46 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Helper to get the hero image URL from inline styles
-  function getHeroImageUrl(wrapperDiv) {
-    if (!wrapperDiv) return null;
-    const style = wrapperDiv.getAttribute('style');
-    if (!style) return null;
-    let match = style.match(/--image-large:\s*url\('([^']+)'\)/);
-    if (!match) {
-      match = style.match(/--image-medium:\s*url\('([^']+)'\)/);
-    }
-    if (!match) {
-      match = style.match(/--image-small:\s*url\('([^']+)'\)/);
-    }
-    return match ? match[1] : null;
-  }
-
-  // Find the grid container (main columns structure)
-  const grid = element.querySelector('.container-grid');
-  if (!grid) return;
-  // Left: Content wrapper, Right: Image wrapper
-  const contentWrapper = grid.querySelector('.c-hero-header-key-callout__content-wrapper');
-  const imageWrapper = grid.querySelector('.c-hero-header-key-callout__image-wrapper');
-
-  // Left column content
-  let leftContent = null;
+  // 1. Extract left column (content)
+  const contentWrapper = element.querySelector('.c-hero-header-key-callout__content-wrapper');
+  let leftColNodes = [];
   if (contentWrapper) {
-    const containerBody = contentWrapper.querySelector('.c-content-container__body');
-    if (containerBody) {
-      leftContent = containerBody;
+    const body = contentWrapper.querySelector('.c-content-container__body');
+    if (body) {
+      leftColNodes = Array.from(body.childNodes).filter(node => node.nodeType !== Node.TEXT_NODE || node.textContent.trim().length > 0);
     } else {
-      leftContent = contentWrapper;
+      leftColNodes = Array.from(contentWrapper.childNodes).filter(node => node.nodeType !== Node.TEXT_NODE || node.textContent.trim().length > 0);
     }
-  } else {
-    leftContent = '';
   }
 
-  // Right column content: the image, only if the URL exists
-  let rightContent = '';
-  const imageUrl = getHeroImageUrl(imageWrapper);
-  if (imageUrl) {
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.setAttribute('loading', 'lazy');
-    rightContent = img;
+  // 2. Extract right column (image)
+  const imageWrapper = element.querySelector('.c-hero-header-key-callout__image-wrapper');
+  let rightColNode = null;
+  if (imageWrapper) {
+    const style = imageWrapper.getAttribute('style') || '';
+    let imageUrl = null;
+    let match = style.match(/--image-large: url\('([^']+)'/);
+    if (!match) match = style.match(/--image-medium: url\('([^']+)'/);
+    if (!match) match = style.match(/--image-small: url\('([^']+)'/);
+    if (match) {
+      imageUrl = match[1];
+    }
+    if (imageUrl) {
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.alt = '';
+      rightColNode = img;
+    } else {
+      rightColNode = imageWrapper;
+    }
   }
 
-  // The header row must have one cell, but for proper alignment, create two columns for data row
-  const rows = [];
-  // Header row: a single cell, no empty cells for remaining columns
-  rows.push(['Columns (columns1)']);
-  // Data row: two columns
-  rows.push([leftContent, rightContent]);
+  // 3. Build table: header is single column, second row has two columns
+  const cells = [];
+  // Header row: one column only
+  cells.push(['Columns (columns1)']);
+  // Content row: two columns
+  cells.push([leftColNodes, rightColNode]);
 
-  // Create the table
-  const table = WebImporter.DOMUtils.createTable(rows, document);
-
-  // Fix the table so the header <th> spans both columns
-  const th = table.querySelector('th');
-  if (th && table.rows[1] && table.rows[1].cells.length > 1) {
-    th.colSpan = table.rows[1].cells.length;
-  }
-
-  element.replaceWith(table);
+  const block = WebImporter.DOMUtils.createTable(cells, document);
+  element.replaceWith(block);
 }

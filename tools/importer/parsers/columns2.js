@@ -1,49 +1,32 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the icons container (should handle variations)
+  // Find the icons block wrapper
   const iconsWrapper = element.querySelector('.c-cvp-icons__items');
   if (!iconsWrapper) return;
 
-  // Get all icon items (direct children)
+  // Get all columns (icon items)
   const iconItems = Array.from(iconsWrapper.children).filter(child => child.classList.contains('c-cvp-icon-item'));
-  if (!iconItems.length) return;
 
-  // For each column, combine ALL content (icon + text) in source order
-  const columnsRow = iconItems.map(item => {
-    const cellContent = [];
-    // Include all immediate children of the item in order
-    Array.from(item.childNodes).forEach(node => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        // For content wrappers, preserve their children
-        if (node.classList.contains('c-cvp-icon-item__content')) {
-          Array.from(node.childNodes).forEach(contentNode => {
-            if (contentNode.nodeType === Node.ELEMENT_NODE) {
-              cellContent.push(contentNode);
-            } else if (contentNode.nodeType === Node.TEXT_NODE && contentNode.textContent.trim()) {
-              const span = document.createElement('span');
-              span.textContent = contentNode.textContent;
-              cellContent.push(span);
-            }
-          });
-        } else {
-          // e.g. image or other
-          cellContent.push(node);
-        }
-      } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-        const span = document.createElement('span');
-        span.textContent = node.textContent;
-        cellContent.push(span);
-      }
+  // For each column, gather all direct children (img, content, etc.)
+  const columns = iconItems.map(item => {
+    // Gather all direct children (preserves markup and text)
+    const cellContent = Array.from(item.childNodes).filter(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) return true;
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') return true;
+      return false;
     });
-    // If cellContent is empty, fallback to the whole item
-    if (!cellContent.length) cellContent.push(item);
-    return cellContent;
+    // If empty, return empty string (shouldn't happen)
+    return cellContent.length === 1 ? cellContent[0] : cellContent;
   });
 
-  // Header row as per block requirements
+  // Header row: single cell, exactly as in the example
   const headerRow = ['Columns (columns2)'];
-  const tableRows = [headerRow, columnsRow];
-  const table = WebImporter.DOMUtils.createTable(tableRows, document);
+
+  // Table structure: header row, then one row with each column as a cell
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    columns
+  ], document);
 
   element.replaceWith(table);
 }

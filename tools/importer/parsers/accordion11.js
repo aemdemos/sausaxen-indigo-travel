@@ -1,43 +1,36 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Create the Accordion header row exactly as in the example
-  const cells = [
-    ['Accordion']
-  ];
-  // Select all direct .c-accordion__item children of the element
+  // Table header row, exactly as in the example
+  const headerRow = ['Accordion'];
+
+  // Find all accordion items (direct children)
   const items = element.querySelectorAll(':scope > .c-accordion__item');
-  items.forEach((item) => {
-    // Title cell: find the button then .item-title (reference the actual element)
-    let titleCell = '';
-    const button = item.querySelector('button.c-accordion__header-button');
+
+  const rows = Array.from(items).map((item) => {
+    // Title cell: get the span.item-title inside the button
+    const button = item.querySelector('.c-accordion__header-button');
+    let titleContent = '';
     if (button) {
       const titleSpan = button.querySelector('.item-title');
       if (titleSpan) {
-        titleCell = titleSpan;
+        titleContent = titleSpan;
       }
     }
-    // Content cell: reference all child nodes of .c-accordion__content__details (preserving block structure)
+
+    // Content cell: use the .c-accordion__content__details div (reference, do not clone)
+    let details = item.querySelector('.c-accordion__content__details');
     let contentCell = '';
-    const details = item.querySelector('.c-accordion__content__details');
     if (details) {
-      // Use all children including text nodes (skip pure whitespace)
-      const nodes = Array.from(details.childNodes).filter(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          return node.textContent.trim().length > 0;
-        }
-        return true;
-      });
-      if (nodes.length === 1) {
-        contentCell = nodes[0];
-      } else if (nodes.length > 1) {
-        contentCell = nodes;
-      }
+      contentCell = details;
     }
-    cells.push([
-      titleCell,
-      contentCell
-    ]);
+
+    return [titleContent, contentCell];
   });
-  const table = WebImporter.DOMUtils.createTable(cells, document);
+
+  const table = WebImporter.DOMUtils.createTable([
+    headerRow,
+    ...rows,
+  ], document);
+
   element.replaceWith(table);
 }

@@ -1,61 +1,54 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the inner section containing the columns content
-  const section = element.querySelector('.c-flexible-wrapper.c-two-col-generic');
-  if (!section) return;
-  const container = section.querySelector('.container');
-  if (!container) return;
-  const row = container.querySelector('.row');
+  // Find the main two-column section within the given element
+  const twoColSection = element.querySelector('.c-two-col-generic');
+  if (!twoColSection) return;
+
+  // Get the columns (image and text)
+  const row = twoColSection.querySelector('.row');
   if (!row) return;
-  const cols = row.querySelectorAll(':scope > div');
-  if (cols.length < 2) return;
+  const colDivs = row.querySelectorAll(':scope > div');
+  if (colDivs.length < 2) return;
 
-  // LEFT COLUMN: Image as rendered in the design
-  let colImageCell = null;
-  const imgCol = cols[0];
-  if (imgCol && imgCol.classList.contains('c-two-col-generic__image-wrapper')) {
-    // Try to get the largest (desktop) image from background-image style
-    const bgStyle = imgCol.style.backgroundImage;
-    let imgUrl = null;
-    if (bgStyle && bgStyle.startsWith('url(')) {
-      imgUrl = bgStyle.slice(4, -1).replace(/"/g, '');
-    }
-    if (imgUrl) {
-      const img = document.createElement('img');
-      img.src = imgUrl;
-      img.alt = '';
-      colImageCell = img;
-    }
+  // --- First Column: Image ---
+  const imgCol = colDivs[0];
+  // Get the background image URL from style
+  let imgUrl = '';
+  if (imgCol.style && imgCol.style.backgroundImage) {
+    imgUrl = imgCol.style.backgroundImage.replace(/url\(["']?(.*?)["']?\)/, '$1');
+  }
+  let imgEl = null;
+  if (imgUrl) {
+    imgEl = document.createElement('img');
+    imgEl.src = imgUrl;
+    imgEl.alt = '';
   }
 
-  // RIGHT COLUMN: Content (heading, paragraphs, list, links)
-  let colContentCell = [];
-  const textCol = cols[1];
-  if (textCol) {
-    const card = textCol.querySelector('.c-card');
-    if (card) {
-      // Card Content: h2, p, ol
-      const content = card.querySelector('.c-card__content');
-      if (content) {
-        Array.from(content.children).forEach(child => colContentCell.push(child));
+  // --- Second Column: Text ---
+  const textCol = colDivs[1];
+  // Compose the text (keep all card content and button wrapper together)
+  const card = textCol.querySelector('.c-card');
+  let textContentContainer = document.createElement('div');
+  if (card) {
+    // Use all direct children of the card to preserve structure
+    card.childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        textContentContainer.appendChild(node);
       }
-      // Buttons/links
-      const btnWrapper = card.querySelector('.c-button-wrapper');
-      if (btnWrapper) {
-        Array.from(btnWrapper.children).forEach(btn => colContentCell.push(btn));
+    });
+  } else {
+    // fallback: include all children
+    textCol.childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        textContentContainer.appendChild(node);
       }
-    }
+    });
   }
 
-  // Header must exactly match: 'Columns (columns8)'
+  // --- Build the block table ---
   const headerRow = ['Columns (columns8)'];
-  const cellsRow = [colImageCell, colContentCell];
-
-  // Create the block table (2 columns)
-  const table = WebImporter.DOMUtils.createTable([
-    headerRow,
-    cellsRow
-  ], document);
-
+  const contentRow = [imgEl, textContentContainer];
+  const cells = [headerRow, contentRow];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
   element.replaceWith(table);
 }

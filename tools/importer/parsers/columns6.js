@@ -1,44 +1,35 @@
 /* global WebImporter */
 export default function parse(element, { document }) {
-  // Find the deepest row that contains the two columns (text and logo)
-  let contentRow = null;
-  let columns = null;
-  // Search for div.container > div.row that has two direct >div children
-  const containerRows = element.querySelectorAll('div.container > div.row');
-  for (const row of containerRows) {
-    const directCols = row.querySelectorAll(':scope > div');
+  // Find the innermost row with two columns containing the actual content
+  let layoutRow = null;
+  // Search for the row with two columns that contain the actual block content
+  const rows = element.querySelectorAll('.row');
+  for (const row of rows) {
+    const directCols = Array.from(row.children).filter(
+      (child) => child.matches('[class*="col-"]')
+    );
     if (directCols.length === 2) {
-      columns = directCols;
-      contentRow = row;
+      layoutRow = row;
       break;
     }
   }
-  // Fallback: try to find any row with two columns
-  if (!columns) {
-    const rows = element.querySelectorAll('div.row');
-    for (const row of rows) {
-      const directCols = row.querySelectorAll(':scope > div');
-      if (directCols.length === 2) {
-        columns = directCols;
-        contentRow = row;
-        break;
-      }
-    }
-  }
-  // Defensive: if not exactly 2 columns found, exit function
-  if (!columns || columns.length !== 2) {
-    return;
-  }
+  if (!layoutRow) return; // Exit if expected structure not found
 
-  // Use the entire column elements as cells, preserving all nested structure
+  // Get both column elements
+  const columns = Array.from(layoutRow.children).filter(x => x.matches('[class*="col-"]'));
+  const leftCol = columns[0];
+  const rightCol = columns[1];
+
+  // The block table needs the proper header and both columns as the content row
   const headerRow = ['Columns (columns6)'];
-  const contentRowArr = [columns[0], columns[1]];
+  const contentRow = [leftCol, rightCol];
 
-  const table = WebImporter.DOMUtils.createTable([
+  // Create the columns block table
+  const block = WebImporter.DOMUtils.createTable([
     headerRow,
-    contentRowArr
+    contentRow
   ], document);
 
-  // Replace the original element with the block table
-  element.replaceWith(table);
+  // Replace the entire source element with the new table
+  element.replaceWith(block);
 }
