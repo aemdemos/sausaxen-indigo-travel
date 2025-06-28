@@ -2,13 +2,13 @@
   Fix: Reordering selectors to resolve no-descending-specificity for .columns.columns1 > div, > div > div, > div > div:first-child, and button links
 */
 
+.columns img {
+  width: 100%;
+}
+
 .columns > div {
   display: flex;
   flex-direction: column;
-}
-
-.columns img {
-  width: 100%;
 }
 
 .columns > div > div {
@@ -29,7 +29,6 @@
     flex-direction: unset;
     gap: 24px;
   }
-
   .columns > div > div {
     flex: 1;
     order: unset;
@@ -54,6 +53,63 @@
   max-width: none;
 }
 
+.columns.columns2 {
+  background: #FAF7F6;
+  padding: 56px 0;
+}
+
+.columns.columns6 {
+  background: #fdf9f8;
+  width: 100%;
+}
+
+.columns.columns6 p {
+  color: #00186a;
+  font-family: var(--body-font-family);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 0.8em;
+}
+
+.columns.columns2 > div {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.columns.columns2 > div > div p {
+  color: #051A6B;
+  font-size: 20px;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.columns.columns2 > div > div p sup {
+  color: #051A6B;
+  font-size: 0.7em;
+}
+
+.columns.columns7 > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 56px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 180px;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
 .columns.columns1 > div,
 .columns.columns2 > div,
 .columns.columns6 > div {
@@ -68,37 +124,10 @@
   min-height: 480px;
 }
 
-.columns.columns2 {
-  background: #FAF7F6;
-  padding: 56px 0;
-}
-
-.columns.columns6 {
-  background: #fdf9f8;
-  width: 100%;
-}
-
-.columns.columns2 > div {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 32px;
-}
-
-.columns.columns6 > div {
-  flex-direction: row;
-  align-items: center;
-  gap: 64px;
-  padding: 56px 32px 56px 56px;
-  width: 100%;
-}
-
 .columns.columns1 > div > div,
 .columns.columns2 > div > div,
-.columns.columns6 > div > div {
+.columns.columns6 > div > div,
+.columns.columns7 > div > div {
   min-width: 0;
   box-sizing: border-box;
   padding: 0;
@@ -168,36 +197,18 @@
   object-fit: contain;
 }
 
-.columns img {
-  width: 100%;
-}
-
-.columns.columns1 > div > div > .columns-img-col img {
-  display: block;
-}
-
-.columns.columns1 > div > div:first-child h1 {
-  color: #fff;
-  font-family: Graphik, "Helvetica Neue", Arial, sans-serif;
-  font-size: 2.9rem;
-  font-weight: 300;
-  line-height: 1.13;
-  margin: 0 0 35px;
-  letter-spacing: 0.01em;
-}
-
-.columns.columns6 h2 {
-  color: #00186a;
-  font-family: var(--heading-font-family);
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 16px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+.columns.columns7 .columns-img-col p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
 }
 
 .columns.columns1 > div > div:first-child p,
-.columns.columns6 p {
+.columns.columns6 p,
+.columns.columns7 > div > div:first-child p {
   font-size: 1.15rem;
   line-height: 1.6;
   margin: 0 0 36px;
@@ -208,28 +219,66 @@
   color: #f0f4fa;
 }
 
-.columns.columns6 p {
-  color: #00186a;
-  font-family: var(--body-font-family);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  margin: 0 0 0.8em;
-}
-
-.columns.columns2 > div > div p {
-  color: #051A6B;
-  font-size: 20px;
-  font-family: var(--body-font-family);
-  font-weight: 400;
-  text-align: center;
+.columns.columns7 > div > div {
+  min-width: 0;
   margin: 0;
-  line-height: 1.25;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.columns.columns2 > div > div p sup {
-  color: #051A6B;
-  font-size: 0.7em;
+/* Text column (left) */
+.columns.columns7 > div > div:first-child {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.columns.columns7 > div > div:first-child h2 {
+  color: #00145D;
+  font-family: var(--heading-font-family);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.columns.columns7 > div > div:first-child sup {
+  color: #00145D;
+}
+
+.columns.columns7 > div > div:first-child em {
+  color: #00145D;
+}
+
+/* Badge column (right) */
+.columns.columns7 > div > .columns-img-col {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  padding: 0;
+}
+
+.columns.columns7 .columns-img-col picture {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.columns.columns7 .columns-img-col img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+  display: block;
+  max-width: 100%;
 }
 
 .columns.columns1 > div > div:first-child p + p {
@@ -244,6 +293,18 @@
   margin-bottom: 0;
   align-items: center;
   padding: 0;
+}
+
+.columns.columns1 > div > div:first-child a:last-child {
+  color: #fff;
+  font-size: 1.12rem;
+  font-weight: 400;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  line-height: 1.2;
 }
 
 .columns.columns1 > div > div:first-child a:first-child {
@@ -267,18 +328,6 @@
   background: #e6e8ef;
   color: #050F5E;
   text-decoration: none;
-}
-
-.columns.columns1 > div > div:first-child a:last-child {
-  color: #fff;
-  font-size: 1.12rem;
-  font-weight: 400;
-  text-decoration: underline;
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  line-height: 1.2;
 }
 
 .columns.columns1 > div > div:last-child::after {
@@ -315,30 +364,25 @@
     width: 100vw;
     max-width: 100vw;
   }
-
   .columns.columns1 > div {
     flex-direction: column;
     min-width: 100vw;
     min-height: 0;
     width: 100vw;
   }
-
   .columns.columns1 > div > div {
     width: 100vw;
     min-width: 100vw;
     min-height: 160px;
     padding: 32px 16px;
   }
-
   .columns.columns1 > div > div:last-child::after {
     width: 120px;
     height: 80px;
   }
-
   .columns.columns2 {
     padding: 32px 0;
   }
-
   .columns.columns2 > div {
     flex-direction: column;
     align-items: center;
@@ -346,34 +390,59 @@
     max-width: none;
     padding: 0 10px;
   }
-
   .columns.columns2 > div > div {
     max-width: 90vw;
     margin: 0 0 20px;
   }
-
   .columns.columns2 > div > div img {
     width: 56px;
     max-width: 56px;
     max-height: 56px;
     margin-bottom: 16px;
   }
-
   .columns.columns6 > div {
     flex-direction: column;
     align-items: stretch;
     gap: 32px;
     padding: 32px 16px;
   }
-
   .columns.columns6 > div > div:first-child {
     max-width: 100%;
   }
-
   .columns.columns6 > div > div:last-child {
     min-width: 0;
     max-width: none;
     margin-left: 0;
     justify-content: center;
   }
+  .columns.columns7 > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 0 16px;
+    min-height: 0;
+  }
+  .columns.columns7 > div > .columns-img-col {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    margin-top: 16px;
+  }
+  .columns.columns7 .columns-img-col p {
+    justify-content: flex-start;
+    gap: 20px;
+  }
+  .columns.columns7 .columns-img-col img {
+    width: 90px;
+    height: 90px;
+  }
 }
+
+/* --- Begin Generated CSS (with merged .columns.columns7 below) --- */
+
+.columns.columns7 {
+  background: #fff;
+  padding: 48px 0;
+}
+
+/* --- End merged .columns.columns7 --- */
