@@ -219,7 +219,7 @@
       ]
     },
     {
-      "name": "Cards",
+      "name": "Cards (no images)",
       "cluster": 14,
       "source": "Cards",
       "target": "Cards (cards14)",
@@ -250,7 +250,6 @@
     }
   ],
   "outliers": [
-  
     {
       "url": "https://www.nrma.com.au/home-loans",
       "urlHash": "c6fa4982f4af50718d8de8eb73ed3f66c40ee9ff",
