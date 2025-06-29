@@ -1,3 +1,4 @@
+
 /* Card grid */
 .cards > ul {
   list-style: none;
@@ -178,7 +179,7 @@
 }
 
 .cards.cardsnoimages4 .cards-card-body h3 {
-  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, Liberation Sans, sans-serif;
+  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
   color: #0a1a4f;
   font-size: 20px;
   font-weight: 700;
@@ -190,7 +191,7 @@
 }
 
 .cards.cardsnoimages4 .cards-card-body p {
-  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, Liberation Sans, sans-serif;
+  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
   color: #0a1a4f;
   font-size: 16px;
   font-weight: 400;
@@ -215,7 +216,7 @@
 }
 
 .cards.cardsnoimages5 .cards-card-body > p:first-child {
-  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, sans-serif;
+  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   color: #071e5e;
@@ -224,7 +225,7 @@
 }
 
 .cards.cardsnoimages5 .cards-card-body > p:not(:first-child) {
-  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, sans-serif;
+  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   font-weight: 400;
   color: #071e5e;
@@ -467,4 +468,15 @@
   .cards.cards14 > ul > li:nth-child(n+2):nth-child(-n+6) {
     padding-left: 10px;
   }
+}
+
+.cards {
+  background: #fff;
+  max-width: 1200px;
+  margin: 56px auto 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 0;
+  min-height: 380px;
+  display: block;
 }
