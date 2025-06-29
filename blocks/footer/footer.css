@@ -1,3 +1,4 @@
+
 footer {
   background-color: var(--light-color);
   font-size: var(--body-font-size-xs);
@@ -18,3 +19,281 @@ footer .footer p {
     padding: 40px 32px 24px;
   }
 }
+
+
+.footer {
+  background: #0E1850;
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  width: 100vw;
+  min-width: 100%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.footer > div {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 48px 32px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 40px;
+  width: 100%;
+}
+
+/* TOP ROW (Acknowledgement) */
+.footer > div > div:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+/* DIVIDER */
+.footer > div > div:nth-child(2), 
+.footer > div hr,
+.footer > div .section-divider {
+  border: none;
+  border-bottom: 1px solid rgb(176 183 209 / 30%);
+  margin: 0;
+  height: 0;
+  width: 100%;
+  background: none;
+}
+
+/* MAIN ROW (Link columns + actions/app) */
+.footer > div > div:nth-child(3) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 56px;
+  width: 100%;
+}
+
+/* LINK COLUMNS GROUP (LEFT) */
+.footer > div > div:nth-child(3) > div:first-child {
+  display: flex;
+  flex-direction: row;
+  gap: 56px;
+  flex: 3 1 0;
+  min-width: 0;
+}
+
+/* INDIVIDUAL LINK COLUMN */
+.footer > div > div:nth-child(3) > div:first-child > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+/* LINK COLUMN HEADING */
+.footer > div > div:nth-child(3) > div:first-child > div > *:first-child {
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* LINKS */
+.footer > div > div:nth-child(3) > div:first-child > div a {
+  color: #fff;
+  text-decoration: underline;
+  font-size: 15px;
+  line-height: 1.7;
+  transition: color 0.2s;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.footer > div > div:nth-child(3) > div:first-child > div a:hover,
+.footer > div > div:nth-child(3) > div:first-child > div a:focus {
+  color: #B0B7D1;
+}
+
+/* ACTIONS/APP (RIGHT) */
+.footer > div > div:nth-child(3) > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 260px;
+  max-width: 340px;
+  flex: 1 1 0;
+}
+
+/* BUTTONS */
+.footer .button,
+.footer button,
+.footer a.button {
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  min-width: 120px;
+  padding: 10px 32px;
+  margin: 0 0 12px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+  letter-spacing: 0.01em;
+}
+
+.footer .button.filled,
+.footer button.filled,
+.footer a.button.filled {
+  background: #FFF6EC;
+  color: #0E1850;
+  border: none;
+}
+
+.footer .button.filled:hover,
+.footer button.filled:hover,
+.footer a.button.filled:hover {
+  background: #FFE2B8;
+  color: #0E1850;
+}
+
+/* SOCIAL ICONS ROW */
+.footer .social-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin: 8px 0 16px;
+}
+
+.footer .social-icons a,
+.footer .social-icons svg,
+.footer .social-icons img {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  color: #fff;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* APP BADGES (vertical) */
+.footer .app-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.footer .app-badges img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* LEGAL / FINE PRINT */
+.footer .footer-legal, 
+.footer .fine-print {
+  color: #B0B7D1;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 32px 0 0;
+}
+
+.footer .footer-legal a, 
+.footer .fine-print a {
+  color: #B0B7D1;
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+/* COOKIE/PRIVACY BAR */
+.footer .footer-cookie-bar {
+  background: #F2F8F7;
+  color: #2D334B;
+  font-size: 13px;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 32px -32px 0;
+  border-radius: 0 0 12px 12px;
+  width: auto;
+}
+
+.footer .footer-cookie-bar a {
+  color: #08F;
+  text-decoration: underline;
+}
+
+.footer .footer-cookie-bar .close {
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: #fff;
+  border: none;
+  color: #2D334B;
+  font-size: 16px;
+}
+
+/* GENERAL CLEANUPS */
+.footer img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.footer p,
+.footer h1,
+.footer h2,
+.footer h3,
+.footer h4,
+.footer h5,
+.footer h6 {
+  margin: 0;
+}
+
+/* RESPONSIVE STACKING */
+@media (width <= 900px) {
+  .footer > div {
+    padding: 32px 12px 0;
+    gap: 32px;
+  }
+
+  .footer > div > div:nth-child(3) {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer > div > div:nth-child(3) > div:first-child {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer > div > div:nth-child(3) > div:last-child {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .footer .footer-cookie-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 12px;
+    margin: 24px -12px 0;
+    font-size: 13px;
+  }
+}
+
