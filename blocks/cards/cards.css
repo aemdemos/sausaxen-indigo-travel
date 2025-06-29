@@ -1,4 +1,5 @@
 
+
 /* Card grid */
 .cards > ul {
   list-style: none;
@@ -479,4 +480,150 @@
   border-radius: 0;
   min-height: 380px;
   display: block;
+}
+
+/* ---- BELOW IS THE GENERATED CSS (except the .cards.cards10 section is merged at the end) ---- */
+
+
+.cards.cards10 ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+}
+
+.cards.cards10 ul > li {
+  background: #fff;
+  min-width: 320px;
+  max-width: 360px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Divider simulation using border and border-radius */
+.cards.cards10 ul > li:not(:first-child) {
+  border-left: 36px solid #d7e7df;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  padding-left: 0;
+
+  /* Remove margin-left if any was set previously */
+  margin-left: 0;
+}
+
+/* Card body layout */
+.cards.cards10 .cards-card-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  background: transparent;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* Remove extra space above/below card body */
+.cards.cards10 .cards-card-body:first-child {
+  min-height: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.cards.cards10 .cards-card-body + .cards-card-body {
+  margin-top: 0;
+}
+
+.cards.cards10 .cards-card-body h3 {
+  color: #001a70;
+  font-size: 20px;
+  font-family: var(--heading-font-family, sans-serif);
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.cards.cards10 .cards-card-body p {
+  color: #222;
+  font-size: 16px;
+  font-family: var(--body-font-family, sans-serif);
+  font-weight: 400;
+  margin: 0 0 20px;
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  max-width: none;
+  white-space: normal;
+  word-break: normal;
+}
+
+.cards.cards10 .cards-card-body .button-container {
+  width: 100%;
+  display: block;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cards.cards10 .cards-card-body .button {
+  border: 2px solid #001a70;
+  background: #fff;
+  color: #001a70;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 40px;
+  text-align: center;
+  line-height: 1.1;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0;
+}
+
+.cards.cards10 .cards-card-body .button:hover,
+.cards.cards10 .cards-card-body .button:focus {
+  background: #001a70;
+  color: #fff;
+}
+
+@media (width <= 900px) {
+  .cards.cards10 ul {
+    flex-direction: column;
+  }
+
+  .cards.cards10 ul > li {
+    min-width: 0;
+    max-width: none;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+/* ---- MERGED SELECTOR FOR .cards.cards10 ---- */
+.cards.cards10 {
+  background: #fff;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  box-sizing: border-box;
 }
