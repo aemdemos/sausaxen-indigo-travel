@@ -59,3 +59,60 @@
   border-top: 1px solid #dadada;
   background-color: var(--background-color);
 }
+
+.accordion.accordion11 .accordion-item-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 20px;
+  background: #FAF7F7;
+  min-height: unset;
+  font-family: Graphik, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00105C;
+  border: none;
+  outline: none;
+  list-style: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.accordion.accordion11 .accordion-item-label p {
+  flex: 1 1 0%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  min-width: 0;
+}
+
+.accordion.accordion11 .accordion-item-label::after {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin-left: auto;
+  margin-right: 0;
+  border-right: 2px solid #00105C;
+  border-bottom: 2px solid #00105C;
+  transform: rotate(45deg);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.accordion.accordion11 .accordion-item[open] > .accordion-item-label::after {
+  transform: rotate(-135deg);
+}
+
+.accordion.accordion11 .accordion-item-body {
+  background: #FAF7F7;
+  color: #00105C;
+  font-size: 16px;
+  font-family: Graphik, Helvetica Neue, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  padding: 0 20px 20px;
+  border: none;
+  box-sizing: border-box;
+}
