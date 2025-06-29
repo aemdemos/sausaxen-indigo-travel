@@ -1,4 +1,3 @@
-
 /* Card grid */
 .cards > ul {
   list-style: none;
@@ -7,10 +6,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
   grid-gap: 24px;
-}
-
-.cards .cards-card-body {
-  margin: 16px;
 }
 
 .cards .cards-card-image {
@@ -23,13 +18,8 @@
   object-fit: cover;
 }
 
-.cards.cardsnoimages4 {
-  max-width: 1140px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0;
+.cards .cards-card-body {
+  margin: 16px;
 }
 
 .cards.cardsnoimages5 {
@@ -64,12 +54,6 @@
   box-sizing: border-box;
 }
 
-.cards.cardsnoimages5 .cards-card-body {
-  padding: 0;
-  margin: 0;
-  background: transparent;
-}
-
 .cards.cardsnoimages5 ul > li {
   border: none;
   background: transparent;
@@ -79,6 +63,22 @@
   padding: 0;
   width: 100%;
   display: block;
+}
+
+.cards.cardsnoimages5 .cards-card-body {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.cards.cardsnoimages4 {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 0;
+  background: #fff;
+  box-sizing: border-box;
 }
 
 .cards.cardsnoimages4 > ul {
@@ -126,7 +126,7 @@
 }
 
 .cards.cardsnoimages4 .cards-card-body h3 {
-  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, Liberation Sans, sans-serif;
   color: #0a1a4f;
   font-size: 20px;
   font-weight: 700;
@@ -138,7 +138,7 @@
 }
 
 .cards.cardsnoimages4 .cards-card-body p {
-  font-family: Graphik, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  font-family: Graphik, Segoe UI, Helvetica Neue, Arial, Liberation Sans, sans-serif;
   color: #0a1a4f;
   font-size: 16px;
   font-weight: 400;
@@ -149,7 +149,10 @@
   padding: 0;
 }
 
-/* --- MERGED SELECTOR STARTS HERE --- */
+.cards.cardsnoimages4 .cards-card-body > ul {
+  display: none;
+}
+
 .cards.cards3 {
   background: #f6f7de;
   width: 100vw;
@@ -159,8 +162,6 @@
   box-sizing: border-box;
   overflow-x: visible;
 }
-
-/* --- MERGED SELECTOR ENDS HERE --- */
 
 .cards.cards3 > ul {
   display: flex;
@@ -440,81 +441,4 @@
   .cards.cards14 > ul > li:nth-child(n+2):nth-child(-n+6) {
     padding-left: 10px;
   }
-}
-
-/* --- End of generated CSS --- */
-
-.cards.cards3 > ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  gap: 24px;
-
-  /* Add subtle side padding for a match to the original */
-  padding-left: 16px;
-  padding-right: 16px;
-  margin: 0 auto;
-  width: calc(3 * 340px + 2 * 24px + 32px); /* 3 cards + 2 gaps + 2*side padding */
-  max-width: 100vw;
-  box-sizing: border-box;
-  list-style: none;
-}
-
-.cards.cards3 > ul > li {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgb(0 44 95 / 8%);
-  box-sizing: border-box;
-  padding: 32px 24px 24px;
-  width: 340px;
-  min-width: 0;
-  max-width: 340px;
-  min-height: 440px;
-  margin: 0;
-  position: relative;
-  transition: box-shadow 0.2s;
-}
-
-.cards.cards3 > ul > li:nth-child(n+4) {
-  display: none;
-}
-
-.cards.cards3 .cards-card-body {
-  padding: 0;
-  margin-bottom: 14px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  background: transparent;
-}
-
-.cards.cards3 .cards-card-body:last-child {
-  margin-bottom: 0;
-}
-
-/* Responsive: stack vertically on small screens */
-@media (width <= 1150px) {
-  .cards.cards3 > ul {
-    width: 100%;
-    max-width: 100vw;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    padding: 0 8px;
-  }
-
-  .cards.cards3 > ul > li {
-    max-width: 98vw;
-    width: 100%;
-  }
-}
-
-/* Hide empty cards if any */
-.cards.cards3 > ul > li:empty {
-  display: none;
 }
