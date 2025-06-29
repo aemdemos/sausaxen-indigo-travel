@@ -1,3 +1,4 @@
+
 /*
   Fix: Reordering selectors to resolve no-descending-specificity for .columns.columns1 > div, > div > div, > div > div:first-child, and button links
 */
@@ -29,6 +30,7 @@
     flex-direction: unset;
     gap: 24px;
   }
+
   .columns > div > div {
     flex: 1;
     order: unset;
@@ -364,25 +366,30 @@
     width: 100vw;
     max-width: 100vw;
   }
+
   .columns.columns1 > div {
     flex-direction: column;
     min-width: 100vw;
     min-height: 0;
     width: 100vw;
   }
+
   .columns.columns1 > div > div {
     width: 100vw;
     min-width: 100vw;
     min-height: 160px;
     padding: 32px 16px;
   }
+
   .columns.columns1 > div > div:last-child::after {
     width: 120px;
     height: 80px;
   }
+
   .columns.columns2 {
     padding: 32px 0;
   }
+
   .columns.columns2 > div {
     flex-direction: column;
     align-items: center;
@@ -390,31 +397,37 @@
     max-width: none;
     padding: 0 10px;
   }
+
   .columns.columns2 > div > div {
     max-width: 90vw;
     margin: 0 0 20px;
   }
+
   .columns.columns2 > div > div img {
     width: 56px;
     max-width: 56px;
     max-height: 56px;
     margin-bottom: 16px;
   }
+
   .columns.columns6 > div {
     flex-direction: column;
     align-items: stretch;
     gap: 32px;
     padding: 32px 16px;
   }
+
   .columns.columns6 > div > div:first-child {
     max-width: 100%;
   }
+
   .columns.columns6 > div > div:last-child {
     min-width: 0;
     max-width: none;
     margin-left: 0;
     justify-content: center;
   }
+
   .columns.columns7 > div {
     flex-direction: column;
     align-items: flex-start;
@@ -422,16 +435,19 @@
     padding: 0 16px;
     min-height: 0;
   }
+
   .columns.columns7 > div > .columns-img-col {
     width: 100%;
     min-width: 0;
     justify-content: flex-start;
     margin-top: 16px;
   }
+
   .columns.columns7 .columns-img-col p {
     justify-content: flex-start;
     gap: 20px;
   }
+
   .columns.columns7 .columns-img-col img {
     width: 90px;
     height: 90px;
@@ -446,3 +462,127 @@
 }
 
 /* --- End merged .columns.columns7 --- */
+
+.columns.columns12 {
+  background: #fdf9f9;
+  padding: 48px 0;
+}
+
+.columns.columns12 > div {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-height: 320px;
+}
+
+.columns.columns12 > div > div {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px 0 rgb(16 16 32 / 7%);
+  padding: 36px 36px 44px;
+  min-width: 340px;
+  max-width: 560px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.columns.columns12 h3 {
+  color: #00196A;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Graphik, Helvetica, Arial, sans-serif;
+  line-height: 1.3;
+  text-align: left;
+  margin: 0 0 32px;
+  width: 100%;
+}
+
+.columns.columns12 .button-container,
+.columns.columns12 > div > div:nth-child(2) p {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+  width: auto;
+}
+
+.columns.columns12 .button-container a,
+.columns.columns12 .button,
+.columns.columns12 > div > div:nth-child(2) p a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  height: 48px;
+  padding: 0 36px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Graphik, Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  color: #00196A;
+  margin: 0;
+  outline: none;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.columns.columns12 .button-container a,
+.columns.columns12 .button,
+.columns.columns12 > div > div:nth-child(2) p a:first-child {
+  background: #00196A;
+  color: #fff;
+  border: none;
+}
+
+.columns.columns12 > div > div:nth-child(2) p a:last-child {
+  background: transparent;
+  color: #00196A;
+  border: 2px solid #00196A;
+}
+
+.columns.columns12 .button-container a:hover,
+.columns.columns12 .button:hover,
+.columns.columns12 > div > div:nth-child(2) p a:first-child:hover {
+  background: #223d87;
+  color: #fff;
+}
+
+.columns.columns12 > div > div:nth-child(2) p a:last-child:hover {
+  background: #f5f8ff;
+}
+
+@media (width <= 900px) {
+  .columns.columns12 > div {
+    flex-direction: column;
+    gap: 24px;
+    max-width: 100vw;
+    padding: 0 8px;
+    min-height: 0;
+  }
+
+  .columns.columns12 > div > div {
+    min-width: 0;
+    max-width: 100vw;
+    padding: 24px 12px 32px;
+    align-items: flex-start;
+    height: auto;
+  }
+}
