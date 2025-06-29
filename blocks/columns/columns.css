@@ -1,3 +1,4 @@
+
 /*
   Fix: Reordering selectors and merging duplicates for specificity and best practices
 */
@@ -267,10 +268,6 @@
   background: none;
   border-radius: 0;
   margin-left: 0;
-  /* Uncomment and set the correct path for actual logo:
-  background: url('/path/to/bendigo-adelaide-bank-logo.svg') no-repeat left center;
-  background-size: auto 64px;
-  */
 }
 
 .columns.columns7 > div > .columns-img-col {
@@ -381,6 +378,7 @@
     flex-direction: unset;
     gap: 24px;
   }
+
   .columns > div > div {
     flex: 1;
     order: unset;
@@ -402,6 +400,7 @@
     min-width: 0;
     min-height: 0;
   }
+
   .columns.columns1 > div > div {
     width: 100vw;
     min-width: 100vw;
@@ -409,21 +408,26 @@
     padding: 32px 12px;
     box-sizing: border-box;
   }
+
   .columns.columns1 > div > div:first-child {
     padding: 36px 12px 32px;
   }
+
   .columns.columns1 > div > div:last-child img,
   .columns.columns1 > div > div:last-child svg {
     max-width: 120px;
     max-height: 120px;
   }
+
   .columns.columns1 > div > div:last-child::after {
     width: 120px;
     height: 80px;
   }
+
   .columns.columns2 {
     padding: 32px 0;
   }
+
   .columns.columns2 > div {
     flex-direction: column;
     align-items: center;
@@ -431,16 +435,19 @@
     max-width: none;
     padding: 0 10px;
   }
+
   .columns.columns2 > div > div {
     max-width: 90vw;
     margin: 0 0 20px;
   }
+
   .columns.columns2 > div > div img {
     width: 56px;
     max-width: 56px;
     max-height: 56px;
     margin-bottom: 16px;
   }
+
   .columns.columns6 > div {
     flex-direction: column;
     align-items: stretch;
@@ -449,6 +456,7 @@
     max-width: 100%;
     min-height: 0;
   }
+
   .columns.columns6 > div,
   .columns.columns6 > div > div,
   .columns.columns6 > div > div:first-child,
@@ -458,9 +466,11 @@
     min-width: 0;
     padding: 0;
   }
+
   .columns.columns6 > div > div:first-child {
     max-width: 100%;
   }
+
   .columns.columns6 > div > div:last-child {
     min-width: 0;
     max-width: none;
@@ -469,6 +479,7 @@
     height: 56px;
     background-size: auto 32px;
   }
+
   .columns.columns7 > div {
     flex-direction: column;
     align-items: flex-start;
@@ -476,16 +487,19 @@
     padding: 0 16px;
     min-height: 0;
   }
+
   .columns.columns7 > div > .columns-img-col {
     width: 100%;
     min-width: 0;
     justify-content: flex-start;
     margin-top: 16px;
   }
+
   .columns.columns7 .columns-img-col p {
     justify-content: flex-start;
     gap: 20px;
   }
+
   .columns.columns7 .columns-img-col img {
     width: 90px;
     height: 90px;
@@ -497,4 +511,136 @@
   max-width: unset;
   padding: 0;
   margin: 0;
+}
+
+.columns.columns7 {
+  background: #fdf9f9;
+  padding: 0;
+}
+
+/* Text column */
+.columns.columns7 > div > div:first-child {
+  flex: 1 1 0;
+  max-width: 570px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+}
+
+/* Badge column - ensure always visible width/height */
+.columns.columns7 > div > .columns-img-col {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 250px;
+  min-height: 120px;
+  padding: 0;
+  margin: 0;
+
+  /* If p:empty, keep space for images */
+}
+
+.columns.columns7 .columns-img-col p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  min-width: 220px;
+  min-height: 110px;
+}
+
+/* Badge image sizing and force display */
+.columns.columns7 .columns-img-col img {
+  width: 110px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  margin: 0;
+  max-width: unset;
+  max-height: unset;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Typography – headline */
+.columns.columns7 > div > div:first-child h2 {
+  color: #00125c;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--heading-font-family), Arial, sans-serif;
+  margin: 0 0 16px;
+  line-height: 1.15;
+  letter-spacing: normal;
+}
+
+/* Typography – paragraph */
+.columns.columns7 > div > div:first-child p {
+  color: #00125c;
+  font-size: 1rem;
+  font-family: var(--body-font-family), Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+  max-width: 520px;
+}
+
+/* Typography – italics and superscript */
+.columns.columns7 > div > div:first-child p em {
+  font-style: italic;
+  color: #00125c;
+}
+
+.columns.columns7 > div > div:first-child p sup {
+  color: #00125c;
+  font-size: 0.7em;
+  vertical-align: super;
+}
+
+/* Hide any lists that may be present */
+.columns.columns7 ul,
+.columns.columns7 ol,
+.columns.columns7 li {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (width <= 900px) {
+  .columns.columns7 > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 28px 10px;
+    min-height: 0;
+  }
+
+  .columns.columns7 .columns-img-col img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .columns.columns7 > div > div:first-child {
+    max-width: 100%;
+  }
+
+  .columns.columns7 .columns-img-col p {
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+.columns.columns7 {
+  background: #fdf9f9;
+  padding: 0;
+
+  /* merged: property from generated CSS wins if duplicate */
 }
